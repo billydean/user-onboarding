@@ -13,7 +13,9 @@ const mySchema = yup.object().shape({
         .string()
         .trim()
         .required('Password is required'),
-    terms: yup.boolean()
+    terms: yup
+        .boolean()
+        .oneOf([true],'Must Accept Terms and Conditions')
 })
 
 export default mySchema;

@@ -3,7 +3,7 @@ import Form from './Form';
 import React, { useState } from 'react';
 import * as yup from 'yup';
 import axios from 'axios';
-import schema from '../validation/formSchema';
+import schema from './validation/formSchema';
 
 // initial or reset form values
 const initialFormValues = {
@@ -14,7 +14,10 @@ const initialFormValues = {
 };
 // initial or reset error messages
 const initialErrors = {
-
+  name: "",
+  email: "",
+  password: "",
+  terms: "",
 };
 
 // control whether 'submit' button is disabled
@@ -39,6 +42,29 @@ function App() {
         setFormValues(initialFormValues);
       })
       .catch(err => console.error(err))
+  }
+  // validation - followed the guided project; still learning!
+  const validate = (name, value) => {
+    yup.reach(schema, name) //reaches to defined schema.name
+      .validate(value) //validates each val according to schema.name
+      .then(() => setErrors({ ...errors, [name]: '' })) // if validated, takes current set of errors and clears value in question
+      .catch(err => setErrors({ ...errors, [name]: err.errors[0] })) //if invalid, adds error message to value in question
+  }
+  // changing form values
+  const change = (name, value) => {
+    validate(name, value);
+    setFormValues({
+      ...formValues,
+      [name]: value
+    })
+  }
+  // submitting new user, calling the post helper from above
+  const userSubmit = () => {
+    const user = {
+      name: formValues.name.trim(),
+      email: formValues.email.trim(),
+      password: formValues.password.trim()
+    }
   }
 
   return (
