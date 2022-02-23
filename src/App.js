@@ -81,6 +81,9 @@ function App() {
           disabled={ disabled }
           errors={ errors }
         />
+        <div className="uglyPreview">
+          <pre>{ JSON.stringify(users) }</pre>
+        </div>
     </div>
   );
 }
