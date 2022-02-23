@@ -1,6 +1,6 @@
 import './App.css';
 import Form from './Form';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as yup from 'yup';
 import axios from 'axios';
 import schema from './validation/formSchema';
@@ -64,8 +64,13 @@ function App() {
       name: formValues.name.trim(),
       email: formValues.email.trim(),
       password: formValues.password.trim()
-    }
+    };
+    onBoard(user);
   }
+  //side effect for toggling whether submit button is disabled
+  useEffect(() => {
+    schema.isValid(formValues).then(valid => setDisabled(!valid))
+  }, [formValues])
 
   return (
     <div className="App">
